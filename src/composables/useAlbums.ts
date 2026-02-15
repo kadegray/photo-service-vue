@@ -1,4 +1,4 @@
-import { ref, watch, type Ref } from 'vue'
+import { ref, watch, onServerPrefetch, type Ref } from 'vue'
 import { usePhotoService } from '../plugin'
 import type { Album, AlbumFilters } from '../types/album'
 import type { PaginationMeta } from '../types/pagination'
@@ -44,6 +44,8 @@ export function useAlbums(filters?: AlbumFilters | Ref<AlbumFilters>) {
   if (filters && 'value' in filters) {
     watch(filters, () => fetch(), { deep: true })
   }
+
+  onServerPrefetch(() => fetch())
 
   return { albums, loading, error, pagination, fetch, nextPage, prevPage }
 }

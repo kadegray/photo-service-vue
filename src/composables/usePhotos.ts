@@ -1,4 +1,4 @@
-import { ref, watch, type Ref } from 'vue'
+import { ref, watch, onServerPrefetch, type Ref } from 'vue'
 import { usePhotoService } from '../plugin'
 import type { Photo, PhotoFilters } from '../types/photo'
 import type { PaginationMeta } from '../types/pagination'
@@ -44,6 +44,8 @@ export function usePhotos(filters?: PhotoFilters | Ref<PhotoFilters>) {
   if (filters && 'value' in filters) {
     watch(filters, () => fetch(), { deep: true })
   }
+
+  onServerPrefetch(() => fetch())
 
   return { photos, loading, error, pagination, fetch, nextPage, prevPage }
 }

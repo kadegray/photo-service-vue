@@ -12,7 +12,9 @@ const props = withDefaults(defineProps<{
 
 const { photos, loading, error, pagination, fetch, nextPage, prevPage } = usePhotos(props.filters)
 
-onMounted(() => fetch())
+onMounted(() => {
+  if (!photos.value.length) fetch()
+})
 
 defineExpose({ photos, loading, error, pagination, fetch, nextPage, prevPage })
 </script>

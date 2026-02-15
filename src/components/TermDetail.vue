@@ -8,7 +8,9 @@ const props = defineProps<{
 
 const { term, loading, error, fetch } = useTerm(props.termId)
 
-onMounted(() => fetch())
+onMounted(() => {
+  if (!term.value) fetch()
+})
 
 defineExpose({ term, loading, error, fetch })
 </script>

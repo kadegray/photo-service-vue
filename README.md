@@ -14,7 +14,9 @@ npm install photo-service-vue
 
 ## Setup
 
-Register the plugin in your Vue app:
+### Vue (SPA)
+
+Register the plugin in your Vue app. Components fetch data client-side on mount.
 
 ```typescript
 import { createApp } from 'vue'
@@ -32,6 +34,105 @@ app.mount('#app')
 ```
 
 The `style.css` import is required for the default component styles. All CSS classes are prefixed with `ps-` to avoid conflicts with your application styles.
+
+### Nuxt
+
+Add the built-in Nuxt module. This works with all Nuxt rendering modes — SPA, SSR, and SSG.
+
+The module automatically:
+- Registers the plugin on both server and client
+- Auto-imports all composables and components
+- Includes the component styles
+
+#### SPA
+
+Client-side only — no server rendering. Composables fetch data in the browser on mount, the same as plain Vue.
+
+```typescript
+// nuxt.config.ts
+export default defineNuxtConfig({
+  ssr: false,
+  modules: ['photo-service-vue/nuxt'],
+  photoService: {
+    baseUrl: 'https://photoservice.ibexel.com',
+    tenantId: 1,
+  },
+})
+```
+
+#### SSR
+
+Server-side rendering on every request. The server fetches data, renders HTML, and serializes the result into the payload so the client hydrates without re-fetching.
+
+```typescript
+// nuxt.config.ts
+export default defineNuxtConfig({
+  modules: ['photo-service-vue/nuxt'],
+  photoService: {
+    baseUrl: 'https://photoservice.ibexel.com',
+    tenantId: 1,
+  },
+})
+```
+
+`ssr: true` is the Nuxt default, so it can be omitted.
+
+#### SSG (Static Site Generation)
+
+Pre-renders every page at build time using `nuxt generate`. Pages are served as static HTML with no runtime server required.
+
+```typescript
+// nuxt.config.ts
+export default defineNuxtConfig({
+  modules: ['photo-service-vue/nuxt'],
+  photoService: {
+    baseUrl: 'https://photoservice.ibexel.com',
+    tenantId: 1,
+  },
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+    },
+  },
+})
+```
+
+Then generate the static site:
+
+```bash
+npx nuxt generate
+```
+
+`crawlLinks: true` tells Nuxt to discover and pre-render all pages linked from your routes. You can also pre-render specific routes with `nitro.prerender.routes`:
+
+```typescript
+nitro: {
+  prerender: {
+    routes: ['/photos', '/albums'],
+  },
+}
+```
+
+In both SSR and SSG modes, composables use `useAsyncData` under the hood, so data fetched on the server is serialized into the HTML payload and available on the client without re-fetching.
+
+```vue
+<!-- pages/photos.vue -->
+<script setup>
+const { photos, loading, pagination, nextPage, prevPage } = usePhotos({
+  highlighted: true,
+  per_page: 20,
+})
+</script>
+
+<template>
+  <div v-if="loading">Loading...</div>
+  <div v-else>
+    <img v-for="photo in photos" :key="photo.id" :src="photo.url" :alt="photo.filename" />
+  </div>
+</template>
+```
+
+The configuration also supports environment variable overrides: `NUXT_PUBLIC_PHOTO_SERVICE_BASE_URL` and `NUXT_PUBLIC_PHOTO_SERVICE_TENANT_ID`.
 
 ## Components
 

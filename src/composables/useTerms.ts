@@ -1,4 +1,4 @@
-import { ref, watch, type Ref } from 'vue'
+import { ref, watch, onServerPrefetch, type Ref } from 'vue'
 import { usePhotoService } from '../plugin'
 import type { Term, TermFilters } from '../types/term'
 import type { PaginationMeta } from '../types/pagination'
@@ -44,6 +44,8 @@ export function useTerms(filters?: TermFilters | Ref<TermFilters>) {
   if (filters && 'value' in filters) {
     watch(filters, () => fetch(), { deep: true })
   }
+
+  onServerPrefetch(() => fetch())
 
   return { terms, loading, error, pagination, fetch, nextPage, prevPage }
 }

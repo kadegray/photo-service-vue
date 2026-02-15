@@ -9,7 +9,9 @@ const props = defineProps<{
 
 const { taxonomies, loading, error, pagination, fetch, nextPage, prevPage } = useTaxonomies(props.filters)
 
-onMounted(() => fetch())
+onMounted(() => {
+  if (!taxonomies.value.length) fetch()
+})
 
 defineExpose({ taxonomies, loading, error, pagination, fetch, nextPage, prevPage })
 </script>

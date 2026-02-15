@@ -1,4 +1,4 @@
-import { ref, watch, isRef, type Ref } from 'vue'
+import { ref, watch, isRef, onServerPrefetch, type Ref } from 'vue'
 import { usePhotoService } from '../plugin'
 import type { Photo } from '../types/photo'
 import type { PaginationParams, PaginationMeta } from '../types/pagination'
@@ -48,6 +48,8 @@ export function useTermPhotos(
   if (isRef(termId)) {
     watch(termId, () => fetch())
   }
+
+  onServerPrefetch(() => fetch())
 
   return { photos, loading, error, pagination, fetch, nextPage, prevPage }
 }

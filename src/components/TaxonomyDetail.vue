@@ -8,7 +8,9 @@ const props = defineProps<{
 
 const { taxonomy, loading, error, fetch } = useTaxonomy(props.taxonomyId)
 
-onMounted(() => fetch())
+onMounted(() => {
+  if (!taxonomy.value) fetch()
+})
 
 defineExpose({ taxonomy, loading, error, fetch })
 </script>

@@ -12,7 +12,9 @@ const props = withDefaults(defineProps<{
 
 const { albums, loading, error, pagination, fetch, nextPage, prevPage } = useAlbums(props.filters)
 
-onMounted(() => fetch())
+onMounted(() => {
+  if (!albums.value.length) fetch()
+})
 
 defineExpose({ albums, loading, error, pagination, fetch, nextPage, prevPage })
 </script>

@@ -1,4 +1,4 @@
-import { ref, watch, isRef, type Ref } from 'vue'
+import { ref, watch, isRef, onServerPrefetch, type Ref } from 'vue'
 import { usePhotoService } from '../plugin'
 import type { Taxonomy } from '../types/taxonomy'
 
@@ -28,6 +28,8 @@ export function useTaxonomy(taxonomyId: number | string | Ref<number | string>) 
   if (isRef(taxonomyId)) {
     watch(taxonomyId, () => fetch())
   }
+
+  onServerPrefetch(() => fetch())
 
   return { taxonomy, loading, error, fetch }
 }

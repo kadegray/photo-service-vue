@@ -8,7 +8,9 @@ const props = defineProps<{
 
 const { album, loading, error, fetch } = useAlbum(props.albumId)
 
-onMounted(() => fetch())
+onMounted(() => {
+  if (!album.value) fetch()
+})
 
 defineExpose({ album, loading, error, fetch })
 </script>

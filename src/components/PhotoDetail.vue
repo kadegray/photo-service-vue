@@ -8,7 +8,9 @@ const props = defineProps<{
 
 const { photo, loading, error, fetch } = usePhoto(props.photoId)
 
-onMounted(() => fetch())
+onMounted(() => {
+  if (!photo.value) fetch()
+})
 
 defineExpose({ photo, loading, error, fetch })
 </script>

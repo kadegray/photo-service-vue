@@ -1,4 +1,4 @@
-import { ref, watch, isRef, type Ref } from 'vue'
+import { ref, watch, isRef, onServerPrefetch, type Ref } from 'vue'
 import { usePhotoService } from '../plugin'
 import type { PhotoWithVariants } from '../types/photo'
 
@@ -27,6 +27,8 @@ export function usePhoto(photoId: string | Ref<string>) {
   if (isRef(photoId)) {
     watch(photoId, () => fetch())
   }
+
+  onServerPrefetch(() => fetch())
 
   return { photo, loading, error, fetch }
 }

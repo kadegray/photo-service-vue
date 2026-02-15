@@ -13,7 +13,9 @@ const props = withDefaults(defineProps<{
 
 const { photos, loading, error, pagination, fetch, nextPage, prevPage } = useAlbumPhotos(props.albumId, props.params)
 
-onMounted(() => fetch())
+onMounted(() => {
+  if (!photos.value.length) fetch()
+})
 
 defineExpose({ photos, loading, error, pagination, fetch, nextPage, prevPage })
 </script>

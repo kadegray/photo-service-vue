@@ -1,4 +1,4 @@
-import { ref, watch, isRef, type Ref } from 'vue'
+import { ref, watch, isRef, onServerPrefetch, type Ref } from 'vue'
 import { usePhotoService } from '../plugin'
 import type { Album } from '../types/album'
 
@@ -28,6 +28,8 @@ export function useAlbum(albumId: number | string | Ref<number | string>) {
   if (isRef(albumId)) {
     watch(albumId, () => fetch())
   }
+
+  onServerPrefetch(() => fetch())
 
   return { album, loading, error, fetch }
 }

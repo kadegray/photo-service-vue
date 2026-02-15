@@ -1,4 +1,4 @@
-import { ref, watch, isRef, type Ref } from 'vue'
+import { ref, watch, isRef, onServerPrefetch, type Ref } from 'vue'
 import { usePhotoService } from '../plugin'
 import type { Term } from '../types/term'
 
@@ -28,6 +28,8 @@ export function useTerm(termId: number | string | Ref<number | string>) {
   if (isRef(termId)) {
     watch(termId, () => fetch())
   }
+
+  onServerPrefetch(() => fetch())
 
   return { term, loading, error, fetch }
 }

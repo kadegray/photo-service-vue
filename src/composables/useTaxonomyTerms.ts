@@ -1,4 +1,4 @@
-import { ref, watch, isRef, type Ref } from 'vue'
+import { ref, watch, isRef, onServerPrefetch, type Ref } from 'vue'
 import { usePhotoService } from '../plugin'
 import type { Term } from '../types/term'
 import type { PaginationParams, PaginationMeta } from '../types/pagination'
@@ -53,6 +53,8 @@ export function useTaxonomyTerms(
   if (isRef(taxonomyId)) {
     watch(taxonomyId, () => fetch())
   }
+
+  onServerPrefetch(() => fetch())
 
   return { terms, loading, error, pagination, fetch, nextPage, prevPage }
 }
