@@ -1,3 +1,4 @@
+export { default as PicturePhoto } from './PicturePhoto.vue'
 export { default as PhotoGallery } from './PhotoGallery.vue'
 export { default as PhotoDetail } from './PhotoDetail.vue'
 export { default as AlbumList } from './AlbumList.vue'

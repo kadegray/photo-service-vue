@@ -1,6 +1,6 @@
 import { ref, watch, isRef, onServerPrefetch, type Ref } from 'vue'
 import { usePhotoService } from '../plugin'
-import type { Photo } from '../types/photo'
+import type { PhotoListItem } from '../types/photo'
 import type { PaginationParams, PaginationMeta } from '../types/pagination'
 
 export function useAlbumPhotos(
@@ -9,7 +9,7 @@ export function useAlbumPhotos(
 ) {
   const client = usePhotoService()
 
-  const photos = ref<Photo[]>([])
+  const photos = ref<PhotoListItem[]>([])
   const loading = ref(false)
   const error = ref<Error | null>(null)
   const pagination = ref<PaginationMeta | null>(null)

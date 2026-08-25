@@ -33,6 +33,10 @@ export interface PhotoWithVariants {
   variants: Photo[]
 }
 
+// List endpoints (e.g. /photos, /albums/{id}/photos) return a flat Photo per
+// item; only the single-photo show endpoint returns the PhotoWithVariants wrapper.
+export type PhotoListItem = PhotoWithVariants | Photo
+
 export interface PhotoFilters extends PaginationParams {
   photo_id?: string
   highlighted?: boolean | 0 | 1

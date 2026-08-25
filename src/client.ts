@@ -1,5 +1,5 @@
 import type { PaginatedResponse } from './types/pagination'
-import type { Photo, PhotoWithVariants, PhotoFilters } from './types/photo'
+import type { PhotoWithVariants, PhotoListItem, PhotoFilters } from './types/photo'
 import type { Album, AlbumFilters } from './types/album'
 import type { Taxonomy, TaxonomyFilters } from './types/taxonomy'
 import type { Term, TermFilters } from './types/term'
@@ -27,17 +27,17 @@ function buildQueryString(params: Record<string, unknown>): string {
 }
 
 export interface ApiClient {
-  getPhotos(filters?: PhotoFilters): Promise<PaginatedResponse<Photo>>
+  getPhotos(filters?: PhotoFilters): Promise<PaginatedResponse<PhotoListItem>>
   getPhoto(photoId: string): Promise<PhotoWithVariants>
   getAlbums(filters?: AlbumFilters): Promise<PaginatedResponse<Album>>
   getAlbum(id: number | string): Promise<{ data: Album }>
-  getAlbumPhotos(albumId: number, params?: PaginationParams): Promise<PaginatedResponse<Photo>>
+  getAlbumPhotos(albumId: number, params?: PaginationParams): Promise<PaginatedResponse<PhotoListItem>>
   getTaxonomies(filters?: TaxonomyFilters): Promise<PaginatedResponse<Taxonomy>>
   getTaxonomy(id: number | string): Promise<{ data: Taxonomy }>
   getTaxonomyTerms(taxonomyId: number, params?: PaginationParams & { name?: string; slug?: string }): Promise<PaginatedResponse<Term>>
   getTerms(filters?: TermFilters): Promise<PaginatedResponse<Term>>
   getTerm(id: number | string): Promise<{ data: Term }>
-  getTermPhotos(termId: number | string, params?: PaginationParams): Promise<PaginatedResponse<Photo>>
+  getTermPhotos(termId: number | string, params?: PaginationParams): Promise<PaginatedResponse<PhotoListItem>>
 }
 
 export function createApiClient(baseUrl: string, tenantId: string | number): ApiClient {
@@ -58,7 +58,7 @@ export function createApiClient(baseUrl: string, tenantId: string | number): Api
 
   return {
     getPhotos(filters?: PhotoFilters) {
-      return request<PaginatedResponse<Photo>>('/photos', filters as Record<string, unknown>)
+      return request<PaginatedResponse<PhotoListItem>>('/photos', filters as Record<string, unknown>)
     },
 
     getPhoto(photoId: string) {
@@ -74,7 +74,7 @@ export function createApiClient(baseUrl: string, tenantId: string | number): Api
     },
 
     getAlbumPhotos(albumId: number, params?: PaginationParams) {
-      return request<PaginatedResponse<Photo>>(`/albums/${albumId}/photos`, params as Record<string, unknown>)
+      return request<PaginatedResponse<PhotoListItem>>(`/albums/${albumId}/photos`, params as Record<string, unknown>)
     },
 
     getTaxonomies(filters?: TaxonomyFilters) {
@@ -98,7 +98,7 @@ export function createApiClient(baseUrl: string, tenantId: string | number): Api
     },
 
     getTermPhotos(termId: number | string, params?: PaginationParams) {
-      return request<PaginatedResponse<Photo>>(`/terms/${encodeURIComponent(String(termId))}/photos`, params as Record<string, unknown>)
+      return request<PaginatedResponse<PhotoListItem>>(`/terms/${encodeURIComponent(String(termId))}/photos`, params as Record<string, unknown>)
     },
   }
 }

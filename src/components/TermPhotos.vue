@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useTermPhotos } from '../composables/useTermPhotos'
+import PicturePhoto from './PicturePhoto.vue'
+import { getPhotoId } from '../utils/photoListItem'
 import type { PaginationParams } from '../types/pagination'
 
 const props = withDefaults(defineProps<{
@@ -42,16 +44,13 @@ defineExpose({ photos, loading, error, pagination, fetch, nextPage, prevPage })
         >
           <div
             v-for="photo in photos"
-            :key="photo.id"
+            :key="getPhotoId(photo)"
             class="ps-overflow-hidden ps-rounded-lg ps-bg-gray-100"
           >
             <slot name="photo" :photo="photo">
-              <img
-                :src="photo.url"
-                :alt="photo.filename"
-                :width="photo.width"
-                :height="photo.height"
-                class="ps-w-full ps-h-auto ps-object-cover"
+              <PicturePhoto
+                :photo="photo"
+                img-class="ps-w-full ps-h-auto ps-object-cover"
                 loading="lazy"
               />
             </slot>

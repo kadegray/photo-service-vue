@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { usePhoto } from '../composables/usePhoto'
+import PicturePhoto from './PicturePhoto.vue'
 
 const props = defineProps<{
   photoId: string
@@ -33,12 +34,10 @@ defineExpose({ photo, loading, error, fetch })
       <slot :photo="photo">
         <div class="ps-space-y-4">
           <div class="ps-overflow-hidden ps-rounded-lg">
-            <img
-              :src="photo.original.url"
-              :alt="photo.original.filename"
-              :width="photo.original.width"
-              :height="photo.original.height"
-              class="ps-w-full ps-h-auto"
+            <PicturePhoto
+              :photo="photo"
+              img-class="ps-w-full ps-h-auto"
+              loading="eager"
             />
           </div>
 

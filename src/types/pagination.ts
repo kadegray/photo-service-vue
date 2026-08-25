@@ -26,4 +26,6 @@ export interface PaginationParams {
   page?: number
   sort_by?: string
   sort_direction?: 'asc' | 'desc'
+  /** Request the variant closest to (but not below) this width, in px. */
+  width?: number
 }

@@ -9,6 +9,7 @@ export type {
   PhotoExif,
   Photo,
   PhotoWithVariants,
+  PhotoListItem,
   PhotoFilters,
 } from './photo'
 

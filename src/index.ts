@@ -8,6 +8,7 @@ export type { ApiClient } from './client'
 
 // Components
 export {
+  PicturePhoto,
   PhotoGallery,
   PhotoDetail,
   AlbumList,
@@ -36,6 +37,12 @@ export {
   useTermPhotos,
 } from './composables'
 
+// Utilities
+export { buildSourceSets } from './utils/buildSourceSets'
+export type { SourceSet, PictureData } from './utils/buildSourceSets'
+export { getOriginalPhoto, getPhotoId, hasVariants } from './utils/photoListItem'
+export { pickLargestSuitableVariant } from './utils/pickVariant'
+
 // Types
 export type {
   PaginationLinks,
@@ -45,6 +52,7 @@ export type {
   PhotoExif,
   Photo,
   PhotoWithVariants,
+  PhotoListItem,
   PhotoFilters,
   AlbumThumbnailPhoto,
   Album,
