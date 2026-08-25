@@ -1,6 +1,6 @@
 {
   "name": "photo-service-vue",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "license": "MIT",
   "type": "module",
   "files": [
@@ -23,6 +23,7 @@
   },
   "scripts": {
     "build": "vue-tsc --noEmit && vite build",
+    "prepare": "npm run build",
     "typecheck": "vue-tsc --noEmit"
   },
   "peerDependencies": {
