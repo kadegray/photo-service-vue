@@ -1,4 +1,5 @@
 import type { PaginationParams } from './pagination'
+import type { AlbumThumbnailPhoto } from './album'
 
 export interface TermTaxonomy {
   id: number
@@ -16,6 +17,7 @@ export interface Term {
   description: string | null
   sort_order: number
   photo_count: number
+  thumbnail_photos: AlbumThumbnailPhoto[]
   created_at: string
   updated_at: string
 }

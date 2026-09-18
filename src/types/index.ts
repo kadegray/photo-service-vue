@@ -7,6 +7,8 @@ export type {
 
 export type {
   PhotoExif,
+  PhotoTermTaxonomy,
+  PhotoTerm,
   Photo,
   PhotoWithVariants,
   PhotoListItem,
